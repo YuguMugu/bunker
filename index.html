@@ -18,4 +18,71 @@
   <select id="provider" disabled>
     <option value="https://interstellar.lol">interstellar.lol</option>
     <option value="https://holyubofficial.net">holyubofficial.net</option>
-  
+    <option value="https://furrys.vercel.app">furrys.vercel.app</option>
+  </select>
+  <br>
+  <button id="launchBtn" disabled>Launch Proxy</button>
+
+  <br><br>
+  <label for="customInput">Or type a shortcut (e.g., yt):</label><br>
+  <input type="text" id="customInput" placeholder="Type shortcut here...">
+  <button id="launchCustomBtn" disabled>Launch Custom URL</button>
+
+  <script>
+    let blankWindow;
+
+    const startBtn = document.getElementById('startBtn');
+    const launchBtn = document.getElementById('launchBtn');
+    const providerSelect = document.getElementById('provider');
+    const customInput = document.getElementById('customInput');
+    const launchCustomBtn = document.getElementById('launchCustomBtn');
+
+    const shortcutMap = {
+      yt: 'https://www.youtube.com',
+      // Add more shortcuts here if you want
+    };
+
+    startBtn.addEventListener('click', () => {
+      blankWindow = window.open('about:blank', '_blank');
+      if (!blankWindow) {
+        alert('⚠️ Please enable pop-ups!');
+        return;
+      }
+      providerSelect.disabled = false;
+      launchBtn.disabled = false;
+      customInput.disabled = false;
+      launchCustomBtn.disabled = false;
+      startBtn.disabled = true;
+    });
+
+    launchBtn.addEventListener('click', () => {
+      const url = providerSelect.value;
+      if (blankWindow && !blankWindow.closed) {
+        blankWindow.location.href = url;
+        blankWindow.focus();
+      } else {
+        blankWindow = window.open(url, '_blank');
+        if (!blankWindow) alert('⚠️ Please enable pop-ups!');
+      }
+    });
+
+    launchCustomBtn.addEventListener('click', () => {
+      const input = customInput.value.trim().toLowerCase();
+      const url = shortcutMap[input] || input;
+
+      if (!url.startsWith('http')) {
+        alert('Please enter a valid URL or shortcut.');
+        return;
+      }
+
+      if (blankWindow && !blankWindow.closed) {
+        blankWindow.location.href = url;
+        blankWindow.focus();
+      } else {
+        blankWindow = window.open(url, '_blank');
+        if (!blankWindow) alert('⚠️ Please enable pop-ups!');
+      }
+    });
+  </script>
+</body>
+</html>
