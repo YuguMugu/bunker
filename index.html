@@ -10,28 +10,39 @@
 </head>
 <body>
   <h1>🚀 Welcome to My Bunker</h1>
-  <label>Select a proxy site to launch:</label>
-  <select id="provider">
+  <button id="startBtn">Start Bunker (Open Blank Tab)</button>
+  <br><br>
+
+  <label for="provider">Select a proxy site to launch:</label>
+  <select id="provider" disabled>
     <option value="https://interstellar.lol">interstellar.lol</option>
     <option value="https://holyubofficial.net">holyubofficial.net</option>
     <option value="https://furrys.vercel.app">furrys.vercel.app</option>
   </select>
   <br>
-  <button onclick="launch()">Launch Proxy</button>
+  <button id="launchBtn" disabled>Launch Proxy</button>
 
   <script>
     let blankWindow;
 
-    // Open about:blank when page loads
-    window.onload = () => {
+    const startBtn = document.getElementById('startBtn');
+    const launchBtn = document.getElementById('launchBtn');
+    const providerSelect = document.getElementById('provider');
+
+    startBtn.addEventListener('click', () => {
       blankWindow = window.open('about:blank', '_blank');
       if (!blankWindow) {
         alert('⚠️ Please enable pop-ups!');
+        return;
       }
-    };
+      // Enable the proxy selector and launch button now
+      providerSelect.disabled = false;
+      launchBtn.disabled = false;
+      startBtn.disabled = true;  // disable start button after use
+    });
 
-    function launch() {
-      const url = document.getElementById("provider").value;
+    launchBtn.addEventListener('click', () => {
+      const url = providerSelect.value;
       if (blankWindow && !blankWindow.closed) {
         blankWindow.location.href = url;
         blankWindow.focus();
@@ -41,7 +52,7 @@
           alert('⚠️ Please enable pop-ups!');
         }
       }
-    }
+    });
   </script>
 </body>
 </html>
