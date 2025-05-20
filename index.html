@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Bunker 🚀</title>
+  <style>
+    body { background-color: #121212; color: white; font-family: monospace; padding: 2em; }
+    h1 { font-size: 1.5em; }
+    select, button { margin-top: 1em; padding: 0.5em; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>🚀 Welcome to My Bunker</h1>
+  <label>Select a proxy site to launch:</label>
+  <select id="provider">
+    <option value="https://interstellar.lol">interstellar.lol</option>
+    <option value="https://holyubofficial.net">holyubofficial.net</option>
+    <option value="https://furrys.vercel.app">furrys.vercel.app</option>
+  </select>
+  <br>
+  <button onclick="launch()">Launch Proxy</button>
+
+  <script>
+    function launch() {
+      const url = document.getElementById("provider").value;
+      const win = window.open(url, "_blank");
+      if (!win) {
+        alert("⚠️ Please enable pop-ups!");
+      }
+    }
+  </script>
+</body>
+</html>
