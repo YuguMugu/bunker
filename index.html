@@ -20,13 +20,29 @@
   <button onclick="launch()">Launch Proxy</button>
 
   <script>
+    let blankWindow;
+
+    // Open about:blank when page loads
+    window.onload = () => {
+      blankWindow = window.open('about:blank', '_blank');
+      if (!blankWindow) {
+        alert('⚠️ Please enable pop-ups!');
+      }
+    };
+
     function launch() {
       const url = document.getElementById("provider").value;
-      const win = window.open(url, "_blank");
-      if (!win) {
-        alert("⚠️ Please enable pop-ups!");
+      if (blankWindow && !blankWindow.closed) {
+        blankWindow.location.href = url;
+        blankWindow.focus();
+      } else {
+        blankWindow = window.open(url, '_blank');
+        if (!blankWindow) {
+          alert('⚠️ Please enable pop-ups!');
+        }
       }
     }
   </script>
 </body>
 </html>
+
